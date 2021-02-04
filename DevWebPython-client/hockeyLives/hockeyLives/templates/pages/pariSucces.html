@@ -1,0 +1,22 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+<head>
+    <meta http-equiv="refresh" content="3; URL=http://localhost:8000/acceuil/">
+</head>
+
+{% block content %}
+
+        <h1>Hockey Nite Lives</h1>
+    {% if pariResp.status == 'OK' %}
+       <article>
+        <p>Votre pari a été pris en compte ...</p>
+        <p>Bonne chance :) !</p>
+       </article>
+    {% else %}
+       <article>
+            <p>Désolé ! Vous ne pouvez pas parier sur ce match</p>
+            <p>La seconde periode s'est propablement écoulée !</p>
+       </article>
+    {% endif %}
+{%endblock%}

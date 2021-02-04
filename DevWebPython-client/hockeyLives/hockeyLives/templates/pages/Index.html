@@ -1,0 +1,42 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+        <h1>Hockey Nite Lives</h1>
+        
+        <div class="matchs">
+        <h1>Matchs ({{listMatchs|length}})</h1>
+        <p class="instuction">Cliquez sur un macth pour voir ses details ...</p>
+
+
+        
+            {% for i in listMatchs %}
+            <article>
+                <!--<h2>1: BAR vs DORT</h2>-->
+                <h2 class="title"><a href="/details/{{i.mId}}">{{i.mId}}: {{i.team1Name|upper}} vs {{i.team2Name|upper}}</a></h2>
+                <h2 class="body" ><pre class="scr"> {{i.scr1}}  -  {{i.scr2}}</pre></h2>
+                <br>
+                <p class="date">Date du match: {{i.date}}</p>
+                <br>
+                <p>Periode en cours : {{i.period}} </p>
+
+                {%if not forloop.last%}
+                
+                {% endif %}
+            </article>
+
+                {% empty %}
+                    <h1 class="vide">Desolé, Pas de match en cours...</h1>
+            
+           
+            {% endfor %}
+        
+
+        
+        </div>
+{%endblock%}
+
+            
+

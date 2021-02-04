@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang= "fr">
+    <head>
+        <title> Hockey en Direct </title>
+        <meta charset="UTF-8">
+        <meta name="description" content="Suivi en direct des jeux de hockey et paris">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="refresh" content="60">  
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+        
+        {% load staticfiles %}
+
+        <script src="{% static 'js/dynamisme.js' %}"></script>
+        
+        <!-- Style pour le background -->
+        <style>
+            body {
+            font-family:  'Open Sans', sans-serif;
+            background-image: url("{% static 'img/Background1.jpg' %}");
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            }
+
+            article p, table, ul{
+                margin-bottom: 1em;
+            }
+        </style>
+
+    </head>
+
+    <body>
+            <!-- <img src="{% static '/img/Background1.jpg' %}" alt="" class="responsive" id="background"> -->
+        {% include 'layouts/_nav.html' %}
+ <div class="wrapper">
+        {% block content %}{%endblock%}
+  
+        {% include 'layouts/_footer.html' %}
+
+    </div>
+        
+    </body>
+
+
+</html>

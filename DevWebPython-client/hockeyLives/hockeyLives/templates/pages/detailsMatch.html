@@ -1,0 +1,119 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+    <div class="detailsMatch">
+    <h1>Details du match</h1>
+
+    <article>
+        
+        <h2>{{detMatch.team1Name|upper}} vs {{detMatch.team2Name|upper}}</h2>
+        <h2><pre>  {{detMatch.scr1}}  -  {{detMatch.scr2}}</pre></h2>
+
+        <br>
+        <p class="date">Date du match: {{detMatch.date}}</p>
+        <br>
+        <p>Periode en cours : {{detMatch.period}} </p>
+
+
+
+        <br>
+        <br>
+            
+        <h2>Table des Penalités</h2>   
+        <table>
+            <tr>
+                <td>Equipes</td>
+                <td>Nombre de Penalités</td>
+            </tr>    
+            <tbody>
+
+            <tr>
+                <td>{{detMatch.team1Name}}</td>
+                <td>{{newdet.nbrePen1}}</td>
+            </tr>
+
+            <tr>
+                <td>{{detMatch.team2Name}}</td>
+                <td>{{newdet.nbrePen2}}</td>
+            </tr>
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td> Nombre Total penalites</td>
+                <td>{{newdet.tot}}</td>
+            </tr>
+        </tfoot>
+        </table>
+    
+    <br>
+       
+    
+    </article>
+    </div>
+
+    <article class="Pari">
+    {% if detMatch.ended == 0 %}
+        <fieldset> 
+            <legend>Placer une mise</legend> 
+            <form action="{% url 'details' id=detMatch.mId %}" method="POST"> 
+                    
+                {% csrf_token %}
+                {{ form.as_p }}
+                
+                <input type="submit" value="Parier">
+                <input type="reset" value="Reinitialiser les saisis">
+            </form>
+            
+        </fieldset>
+    {% else %}
+    <fieldset> 
+        <legend>Bilan des Paris</legend>
+        {% if bilanP.resFinal == 1 %}
+            <p>Vainqueur: {{detMatch.team1name}} </p>
+            
+        {% elif bilanP.resFinal == 2 %}
+            <p>Vainqueur: {{detMatch.team2name}} </p>
+
+        {% else %}
+            <p>Resultat: Match NULL</p>
+        
+        {% endif %}
+
+        <p>La somme totale pariée: <em>{{ bilanP.sumTB }}</em> $CAD </p>
+        <p>La somme totale pariée par les gagnants: <em>{{ bilanP.sumTW }}</em> $CAD</p>
+
+
+        <h2>Table des Paris</h2>   
+        <table>
+            <tr>
+                <td>Parieurs</td>
+                <td>Choix</td>
+                <td>Sommes Mises</td>
+                <td>Sommes gagnées</td>
+            </tr>    
+            <tbody>
+            {% for i in bilanU %}
+                <tr>
+                    <td>{{i.user}}</td>
+                    <td>{{i.choix}}</td>
+                    <td>{{i.mise}}</td>
+                    <td>{{i.gain}}</td>
+                </tr>
+            {% endfor %}  
+        </tbody>
+        </table>
+    
+        <h3>Legende de la table</h3>
+        <p>La colonne choix represente le pronostic du parieur</p>
+        <ul>
+            <li>0 : Match NULL</li>
+            <li>1 : {{detMatch.team1Name}}</li>
+            <li>2 : {{detMatch.team2Name}}</li>
+        </ul>
+    
+    </fieldset>
+
+    {% endif %}
+
+    {%endblock%}
